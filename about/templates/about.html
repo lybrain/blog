@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="centered-container">
+     <h1>Cat blog!</h1>
+     <img class="img-large" src="{% static 'cat.jpg' %}" alt="pic">
+</div>
+
+<div class="centered-container top-margin-container side-paddings">
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tristique convallis leo, sit amet vestibulum tortor
+          vestibulum eu. Suspendisse potenti. Phasellus congue justo vel pharetra faucibus. Praesent eget eleifend nisl.
+          Sed
+          nunc felis, egestas in lorem eu, molestie rhoncus eros. Vivamus sit amet diam quis justo imperdiet viverra in
+          vel
+          arcu. Vivamus sodales tortor in lorem gravida tincidunt. Aenean posuere laoreet nisi vel imperdiet. Curabitur
+          leo
+          neque, volutpat fringilla ante sit amet, egestas auctor dui. Morbi viverra semper elementum. Sed sed risus
+          pharetra, luctus dolor et, laoreet velit. Praesent tellus ex, vulputate vitae mollis sed, feugiat eu nisi.
+          Vestibulum sit amet faucibus diam. Nam iaculis mi vitae lectus congue molestie. Donec id eleifend libero.
+          Vivamus
+          auctor est ligula.
+     </p>
+     <p>
+          Maecenas et tempus sapien. Nam at mauris egestas, rhoncus magna quis, laoreet ante. Curabitur non nulla sit
+          amet
+          tortor tempor pellentesque. Vestibulum dolor sem, malesuada vitae lorem ac, placerat lacinia dui. Phasellus
+          fermentum tellus et varius pulvinar. In ac enim at metus auctor scelerisque. Vivamus faucibus placerat enim
+          quis
+          cursus. Praesent laoreet dapibus volutpat. Curabitur a erat in felis viverra pellentesque sed a nibh.
+          Suspendisse
+          porta cursus posuere. Aenean pretium rhoncus lacinia. Donec in turpis laoreet, convallis nunc ac, tempor
+          metus.
+     </p>
+     <p>
+          Sed tincidunt lorem tortor, at volutpat tellus dignissim vel. Nullam quis ipsum mollis nunc mattis tempus ac
+          sit
+          amet lectus. Etiam eleifend eget nibh nec ultrices. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Nulla
+          facilisi. Vivamus sodales nulla at enim varius laoreet. Praesent sit amet tempus sapien, quis lobortis dolor.
+          Curabitur ornare commodo justo at euismod. Duis vitae risus hendrerit, semper massa commodo, bibendum risus.
+          Proin
+          ornare ante maximus lectus ornare, non semper libero pellentesque. Praesent porta dictum varius. Aliquam
+          ultrices
+          nunc vel pulvinar scelerisque. Donec ornare maximus sem et consequat. Nunc ac accumsan lorem, at varius erat.
+          Curabitur euismod sagittis ipsum, ac pulvinar tortor pellentesque vel. Sed scelerisque bibendum tempus. Cras
+          at
+          euismod est. In erat mauris, ultrices quis erat eu, elementum eleifend lacus. Duis laoreet ullamcorper dictum.
+          Quisque sagittis augue fermentum velit maximus semper. Phasellus semper a velit at semper. Cras venenatis
+          interdum
+          iaculis. Phasellus tincidunt ligula ligula.
+     </p>
+</div>
+<div class="centered-container top-margin-container">
+     <h2>Send your message to Bonya!</h2>
+     <form method="post" >
+          {% csrf_token %}
+          <div class="form-row">
+               <div class="form-group ">
+                    <label for="{{form.email.id_for_label}}">Email</label>
+                    <input type="email" class="form-control" name="email" id={{form.email.id_for_label}} placeholder="Email">
+               </div>
+               <div class="form-group ">
+                    <label for="inputFirstName4">First name</label>
+                    <input type="text" class="form-control" name="first_name" id="inputFirstName44" placeholder="First name">
+               </div>
+               <div class="form-group ">
+                    <label for="inputLastName44">Last name</label>
+                    <input type="text" class="form-control" name="last_name" id="inputLastName44" placeholder="Last name">
+               </div>
+          </div>
+          <div class="form-row">
+               <div class="form-group ">
+                    <label for="inputMessage">Message</label>
+                    <input type="textarea" name="message" class="form-control" id="inputMessage">
+               </div>
+
+          </div>
+          <div class="form-group">
+               <div class="form-check">
+                    <input class="form-check-input" name="allow_mailing" type="checkbox" id="gridCheck">
+                    <label class="form-check-label" for="gridCheck">
+                         Allow mailing
+                    </label>
+               </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Send</button>
+     </form>
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="side-paddings">
+     <h1 class="centered-container">{% if form.instance.description %} Edit {% else %} Add {% endif %} article</h1>
+     <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+               <label for="fieldTitle">Title</label>
+               <input name="title" class="form-control" id="fieldTitle" aria-describedby="emailHelp"
+                    placeholder="Enter title" value="{{ form.instance.title }}">
+          </div>
+          <div class="form-group">
+               <label for="fieldTitle">Short description</label>
+               <textarea name="short_description" class="form-control" id="exampleFormControlTextarea1" rows="2"
+                    placeholder="Enter description">{{ form.instance.short_description|default_if_none:"" }}</textarea>
+          </div>
+          <div class="form-group">
+               <label for="fieldTitle">Description</label>
+               <textarea name="description" class="form-control" id="exampleFormControlTextarea1" rows="5"
+                    placeholder="Enter description">{{ form.instance.description }}</textarea>
+          </div>
+
+          <div class="form-group">
+               <label class="form-label" for="customFile">Upload image</label>
+               <input type="file" name="image" class="form-control" id="customFile" />
+              <div class="centered-container" > {% if form.instance.image %}
+                    <img src="{{ form.instance.image.url }}" />
+               {% endif %}</div>
+          </div>
+
+          <div class="form-group centered-container">
+               <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+     </form>
+</div>
+<div class="centered-container error-container">
+     {% if errors %}
+     {% for k,v in errors.items %}
+     <h3>{{k}}</h3>
+
+     {{ v }}
+
+     {% endfor %}
+     {% endif %}
+</div>
+{% endblock %}

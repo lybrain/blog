@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block js %}
+
+<script type="text/javascript">
+     function validateForm() {
+          const name = document.forms["commentForm"]["name"].value;
+          const text = document.forms["commentForm"]["text"].value;
+
+          var isValid = true
+          if (!text) {
+               alert("Please fill comment field!");
+               isValid = false;
+          }
+          else if (name.length > 100) {
+               alert("Name must be less than 100 symbols!");
+               isValid = false
+          }
+          else if (text.length > 300) {
+               alert("Comment must be less than 300 symbols!");
+               isValid = false
+          }
+          return isValid
+     }
+</script>
+{% endblock %}
+
+{% block content %}
+
+{% if article %}
+
+<div class="centered-container">
+     <div class="edit-menu">
+          {% if article.user.id == request.user.id or perms.article.change_article %}
+          <button><a class="nav-link" href="{% url 'article_edit' id=article.id %}">Edit</a></button>
+          {% endif %}
+          {% if article.user.id == request.user.id or perms.article.delete_article %}
+          <button> <a class="nav-link" href="{% url 'article_delete' id=article.id %}">Delete</a></button>
+          {% endif %}
+     </div>
+   
+     <h1>{{article.title}}</h1>
+     <div class="side-paddings centered-container">
+          <h5 class="top-margin-container">{{article.short_description}}</h5>
+          {% if article.image.url %}<img class="article-picture top-margin-container" src="{{article.image.url}}"
+               alt="article-img">{% endif %}
+          <p class="top-margin-container">{{article.description}}</p>
+         
+     </div>
+</div>
+<div class="side-paddings ">
+     <h1 class="centered-container">Comments: </h1>
+     <form action="comment/create/" method="POST" name="commentForm" onsubmit="return validateForm()">
+          {% csrf_token %}
+          <div class="form-group">
+               <input name="name" class="form-control" id="fieldName" placeholder="Enter name"></input>
+
+          </div>
+          <div class="form-group">
+               <input name="text" class="form-control" id="fieldTitle" placeholder="Enter comment"></input>
+
+          </div>
+          <div class="form-group centered-container">
+               <button type="submit" class="btn btn-primary">Add comment</button>
+          </div>
+     </form>
+     <div>
+          {% if article.comments %}
+
+          {% for comment in article.comments.all %}
+          <div>
+               <hr>
+               <div class="comment-date">
+                    <span>
+                         <h6>{{ comment.name|default:"Anonymous" }}</h6>
+                    </span>
+                    <span>{{comment.created_date}}</span>
+               </div>
+
+               <p>{{comment.text}}</p>
+          </div>
+          {% endfor %}
+          {% endif %}
+
+
+     </div>
+</div>
+
+{% endif %}
+</div>
+{% endblock %}
