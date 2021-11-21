@@ -4,9 +4,18 @@ from article.forms import ArticleCreateForm
 from article.models import Article
 from user.models import User
 from django.contrib.auth.decorators import login_required, permission_required
+from django.core.exceptions import PermissionDenied
+
+# custom add permissions example 
+# user.user_permissions.set([permission_list])
+# user.user_permissions.add(permission, permission, ...)
+# user.user_permissions.remove(permission, permission, ...)
+# user.user_permissions.clear()
 
 @login_required
 def article_get(request,id):
+    if not request.user.has_perm('article.view_article'):
+        raise PermissionDenied
     article = Article.objects.get(id=id)
     if article:
         article.views = article.views + 1
