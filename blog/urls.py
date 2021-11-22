@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from main.views import index
 from about.views import about
 from article.views import article_create, article_delete, article_edit, article_get
@@ -22,8 +22,20 @@ from comment.views import create_comment
 from blog import settings
 from django.conf.urls.static import static
 from user.views import login, registration, logout
+from rest_framework import routers, permissions
+from about.api.urls import wish_message_router
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from about.api.views_mixin import WishMessageCreateListView, WishMessageView
+
+
+router = routers.DefaultRouter()
+router.registry.extend(wish_message_router.registry)
 
 urlpatterns = [
+    path('api/wish_message/<int:id>/', WishMessageView.as_view(), name='WishMessage'),
+    path('api/wish_message/', WishMessageCreateListView.as_view(), name='WishMessage'),
+    # path('api/', include(router.urls)),
     path('login/', login, name='user_login'),
     path('logout/', logout, name='user_logout'),
     path('registration/', registration, name='user_registration'),
@@ -38,3 +50,25 @@ urlpatterns = [
          create_comment, name='article_comment'),
     path('about/', about, name='about')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Blog",
+        default_version='v1',
+        url='localhost:8000',
+        description="Blog",
+        terms_of_service="",
+        contact=openapi.Contact(email="www.librain@gmail.com"),
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+urlpatterns = urlpatterns + [
+    path(r'api/swagger/', schema_view.with_ui('swagger',
+         cache_timeout=5), name='schema-swagger-ui'),
+    path(r'api/redoc/', schema_view.with_ui('redoc',
+         cache_timeout=5), name='schema-redoc-ui'),
+
+]
