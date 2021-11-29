@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
+drf-yasg = "*"
+django-filter = "*"
 gunicorn = "*"
 
 [dev-packages]
