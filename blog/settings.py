@@ -163,7 +163,7 @@ AUTH_USER_MODEL = 'user.User'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'static'),
+    STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'static')
 else:
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'blog', 'static'),
