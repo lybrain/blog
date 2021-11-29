@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-@a%1ly0&jt+9d^j!+(b++u)dl(ut(*i^5^n395huxfzk7ga30^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost',
+                 'git.heroku.com/blog-django-demo.git', '127.0.0.1']
 
 
 # Application definition
@@ -83,11 +84,18 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 try:
-    from blog.db_settings import DATABASES
+    from blog.db_settings import DATABASES1
 except ImportError:
     print('****Database settings error using default****')
-    DATABASES = {'default': {'ENGINE': 'django.db.backends.postgresql_psycopg2', 'NAME': 'blog_db', 'USER': 'postgres',
-                             'PASSWORD': '123qwe', 'HOST': 'localhost', 'PORT': '5432'}}
+    DATABASES = {'default': {
+                             'ENGINE': 'django.db.backends.sqlite3',
+                            # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                             'NAME': 'blog_db',
+                            #  'USER': 'postgres',
+                            #  'PASSWORD': '123qwe',
+                            #  'HOST': 'localhost',
+                            #  'PORT': '5432'
+                             }}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -158,5 +166,5 @@ if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'static')
 else:
     STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'blog', 'static'),
-]
+        os.path.join(BASE_DIR, 'blog', 'static'),
+    ]
