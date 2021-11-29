@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-@a%1ly0&jt+9d^j!+(b++u)dl(ut(*i^5^n395huxfzk7ga30^
 DEBUG = False
 
 ALLOWED_HOSTS = ['localhost',
-                 'git.heroku.com/blog-django-demo.git', '127.0.0.1']
+                 'blog-django-demo.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
