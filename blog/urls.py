@@ -33,9 +33,9 @@ router = routers.DefaultRouter()
 router.registry.extend(wish_message_router.registry)
 
 urlpatterns = [
-    path('api/wish_message/<int:id>/', WishMessageView.as_view(), name='WishMessage'),
-    path('api/wish_message/', WishMessageCreateListView.as_view(), name='WishMessage'),
-    # path('api/', include(router.urls)),
+    path('api/wish_message/<int:id>/', WishMessageView.as_view(), name='WishMessage'), # custom crud
+    path('api/wish_message/', WishMessageCreateListView.as_view(), name='WishMessage'), # custom crud
+    # path('api/', include(router.urls)), # viewset crud
     path('login/', login, name='user_login'),
     path('logout/', logout, name='user_logout'),
     path('registration/', registration, name='user_registration'),

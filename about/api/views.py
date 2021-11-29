@@ -1,15 +1,31 @@
+import django_filters
 from rest_framework import  viewsets, status, permissions
 from rest_framework.decorators import action
 from about.models import WishMessage
 from rest_framework.response import Response
 from about.api.serializers import WishMessageSerializer
 from django.shortcuts import get_object_or_404
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
+
+class WishMessageFilter(django_filters.FilterSet):
+    class Meta:
+        model = WishMessage
+        fields = {
+            'created_date': ('lte', 'gte'),
+            'email': ('exact',),
+            'allow_mailing': ('exact',)
+        }
 
 class WishMessageViewSet(viewsets.ModelViewSet):
     queryset = WishMessage.objects.all()
     serializer_class = WishMessageSerializer
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['allow_mailing', 'email', 'created_date']
+    search_fields = ['first_name', 'last_name','email']
+    # filter_class = WishMessageFilter # custom filter class
 
     def list(self, request, *args, **kwargs):  # get
         # serializer = self.serializer_class(self.queryset, many=True)
