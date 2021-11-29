@@ -14,7 +14,7 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -148,9 +149,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
 
-MEDIA_ROOT = BASE_DIR / "blog/static/media/"
+MEDIA_ROOT = BASE_DIR + "/blog/static/media/"
 
 MEDIA_URL = '/media/'
 
@@ -162,9 +162,10 @@ AUTH_USER_MODEL = 'user.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'staticfiles')
-else:
-    STATICFILES_DIRS = [
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'staticfiles')
+STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'blog', 'static'),
     ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
