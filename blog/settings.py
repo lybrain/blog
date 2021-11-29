@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))#Path(__fi
 SECRET_KEY = 'django-insecure-@a%1ly0&jt+9d^j!+(b++u)dl(ut(*i^5^n395huxfzk7ga30^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
                  'blog-django-demo.herokuapp.com', '127.0.0.1']
@@ -149,6 +149,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_URL = '/static/'
 
 MEDIA_ROOT = BASE_DIR + "/blog/static/media/"
 
@@ -162,8 +163,9 @@ AUTH_USER_MODEL = 'user.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/static/'
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'staticfiles')
+
 STATICFILES_DIRS = [
         os.path.join(BASE_DIR, 'blog', 'static'),
     ]
