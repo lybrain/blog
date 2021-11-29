@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@a%1ly0&jt+9d^j!+(b++u)dl(ut(*i^5^n395huxfzk7ga30^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost']
 
@@ -153,9 +153,10 @@ LOGOUT_REDIRECT_URL = "index"
 AUTH_USER_MODEL = 'user.User'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'blog', 'static'),
 
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'static')
+else:
+    STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'blog', 'static'),
 ]
-# if not DEBUG:
-STATIC_ROOT = os.path.join(BASE_DIR, 'blog', 'static')
