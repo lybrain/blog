@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from rest_framework import status, mixins, generics
+from rest_framework.views import APIView
 from about.models import WishMessage
 from rest_framework.response import Response
 from about.api.serializers import WishMessageSerializer
@@ -16,7 +17,7 @@ class WishMessageCreateListView(mixins.ListModelMixin,
         return Response(serializer.data)
 
     def post(self, request):  # post
-        serializer = self.get_serializer(data=request.data)
+        serializer = self.get_serializer(data=request.data,context={'request_method': request.method})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)

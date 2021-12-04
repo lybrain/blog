@@ -95,16 +95,16 @@ try:
                              'HOST': os.environ['DB_HOST'],
                              'PORT': os.environ['DB_PORT']
                              }}
-except ImportError:
+except (ImportError, KeyError):
     print('****Database settings error using default****')
     DATABASES = {'default': {
-                             'ENGINE': 'django.db.backends.sqlite3',
-                            # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                            #  'ENGINE': 'django.db.backends.sqlite3',
+                            'ENGINE': 'django.db.backends.postgresql_psycopg2',
                              'NAME': 'blog_db',
-                            #  'USER': 'postgres',
-                            #  'PASSWORD': '123qwe',
-                            #  'HOST': 'localhost',
-                            #  'PORT': '5432'
+                             'USER': 'postgres',
+                             'PASSWORD': '123qwe',
+                             'HOST': 'localhost',
+                             'PORT': '5432'
                              }}
 
 # Password validation
