@@ -1,0 +1,32 @@
+version: '3'
+    
+services:
+
+  db:
+    image: postgres:12
+    restart: always
+    environment:
+      - POSTGRES_DB=blog
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123qwe
+    volumes:
+      - "./postgres:/var/lib/postgresql/data"
+
+  
+     
+  web:
+    build: ./blog
+    restart: always
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_NAME=blog
+      - DB_USER=postgres
+      - DB_PASSWORD=123qwe
+      - DB_HOST=db
+      - DB_PORT=5432
+    volumes:
+      - ./blog:/blog
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

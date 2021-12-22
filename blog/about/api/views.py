@@ -1,4 +1,4 @@
-import django_filters
+from django_filters import FilterSet
 from rest_framework import  viewsets, status, permissions
 from rest_framework.decorators import action
 from about.models import WishMessage
@@ -9,7 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 
 
-class WishMessageFilter(django_filters.FilterSet):
+class WishMessageFilter(FilterSet):
     class Meta:
         model = WishMessage
         fields = {
@@ -22,15 +22,12 @@ class WishMessageViewSet(viewsets.ModelViewSet):
     queryset = WishMessage.objects.all()
     serializer_class = WishMessageSerializer
     permission_classes = [permissions.IsAuthenticated]
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filter_backends = [filters.SearchFilter,
+                       filters.OrderingFilter, DjangoFilterBackend]
     filterset_fields = ['allow_mailing', 'email', 'created_date']
     search_fields = ['first_name', 'last_name','email']
-    # filter_class = WishMessageFilter # custom filter class
+    filter_class = WishMessageFilter # custom filter class
 
-    def list(self, request, *args, **kwargs):  # get
-        # serializer = self.serializer_class(self.queryset, many=True)
-        # Response(serializer.data)
-        return super().list(request, *args, **kwargs)
 
     def retrieve(self, request, pk=None):  # get
         msg_obj = get_object_or_404(self.queryset, pk=pk)

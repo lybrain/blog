@@ -26,7 +26,7 @@ from rest_framework import routers, permissions
 from about.api.urls import wish_message_router
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from about.api.views_mixin import WishMessageView, WishMessageCreateListView
+from about.api.views_base import WishMessageView, WishMessageCreateListView
 
 
 router = routers.DefaultRouter()

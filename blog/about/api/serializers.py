@@ -10,7 +10,7 @@ class WishMessageSerializer(serializers.ModelSerializer):
         email = validated_data.get('email', None)
         if email:
             wishes = WishMessage.objects.filter(email=email)
-            if wishes.count() > self.WISH_LIMIT:
+            if wishes.count() >= self.WISH_LIMIT:
                 raise serializers.ValidationError('You send more than 3 wishes!')
         return WishMessage.objects.create(**validated_data)
 

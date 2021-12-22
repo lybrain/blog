@@ -1,14 +1,12 @@
 from django.http.response import Http404
-from rest_framework import status, mixins, generics
-from rest_framework.views import APIView
+from rest_framework import status, mixins, generics, views
 from about.models import WishMessage
 from rest_framework.response import Response
 from about.api.serializers import WishMessageSerializer
 
-
-class WishMessageCreateListView(mixins.ListModelMixin,
-                                mixins.CreateModelMixin,
-                                generics.GenericAPIView):
+# using GenericAPIView instead of ApiView, mainly because of 
+# the swagger to generate the body for post, patch, put
+class WishMessageCreateListView(generics.GenericAPIView):
     queryset = WishMessage.objects.all()
     serializer_class = WishMessageSerializer
 
@@ -17,7 +15,7 @@ class WishMessageCreateListView(mixins.ListModelMixin,
         return Response(serializer.data)
 
     def post(self, request):  # post
-        serializer = self.get_serializer(data=request.data,context={'request_method': request.method})
+        serializer = self.get_serializer(data=request.data, context={'request_method': request.method})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -25,9 +23,7 @@ class WishMessageCreateListView(mixins.ListModelMixin,
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
-class WishMessageView(mixins.UpdateModelMixin,
-                      mixins.DestroyModelMixin,
-                      generics.GenericAPIView):
+class WishMessageView(generics.GenericAPIView):
     queryset = WishMessage.objects.all()
     serializer_class = WishMessageSerializer
 

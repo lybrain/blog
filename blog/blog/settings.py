@@ -26,9 +26,9 @@ SECRET_KEY = 'django-insecure-@a%1ly0&jt+9d^j!+(b++u)dl(ut(*i^5^n395huxfzk7ga30^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost',
-                 'blog-django-demo.herokuapp.com', '127.0.0.1']
-
+# ALLOWED_HOSTS = ['localhost',
+#                  'blog-django-demo.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ["*"] # for docker playground
 
 # Application definition
 
@@ -95,17 +95,21 @@ try:
                              'HOST': os.environ['DB_HOST'],
                              'PORT': os.environ['DB_PORT']
                              }}
-except (ImportError, KeyError):
-    print('****Database settings error using default****')
-    DATABASES = {'default': {
-                            #  'ENGINE': 'django.db.backends.sqlite3',
-                            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-                             'NAME': 'blog_db',
-                             'USER': 'postgres',
-                             'PASSWORD': '123qwe',
-                             'HOST': 'localhost',
-                             'PORT': '5432'
-                             }}
+except KeyError:
+    print('****Secured db settings error****')
+    try:
+        from blog.db_settings import DATABASES
+    except ImportError:
+        print('****Database settings error using default****')
+        DATABASES = {'default': {
+                                #  'ENGINE': 'django.db.backends.sqlite3',
+                                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                                'NAME': 'blog_db',
+                                'USER': 'postgres',
+                                'PASSWORD': '123qwe',
+                                'HOST': 'localhost',
+                                'PORT': '5432'
+                                }}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
