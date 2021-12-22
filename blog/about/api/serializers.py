@@ -15,11 +15,11 @@ class WishMessageSerializer(serializers.ModelSerializer):
         return WishMessage.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.title)
-        instance.last_name = validated_data.get('last_name', instance.description)
-        instance.message = validated_data.get('message', instance.body)
-        instance.email = validated_data.get('email', instance.author_id)
-        instance.allow_mailing = validated_data.get('allow_mailing', instance.author_id)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.message = validated_data.get('message', instance.message)
+        instance.email = validated_data.get('email', instance.email)
+        instance.allow_mailing = validated_data.get('allow_mailing', instance.allow_mailing)
 
         instance.save()
         return instance

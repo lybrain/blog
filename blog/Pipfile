@@ -12,6 +12,7 @@ drf-yasg = "*"
 django-filter = "*"
 gunicorn = "*"
 whitenoise = "*"
+django-extensions = "*"
 
 [dev-packages]
 autopep8 = "*"

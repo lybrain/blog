@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'article',
     'comment',
     'rest_framework',
+    'django_extensions',
     'drf_yasg',
     'django_filters',
     'django.contrib.admin',
