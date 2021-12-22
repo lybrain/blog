@@ -12,12 +12,14 @@ services:
     volumes:
       - "./postgres:/var/lib/postgresql/data"
 
-  
-     
+
+ # to run with runserver use the line below instead of gunicorn blog.wsgi ...
+ # python manage.py runserver 0.0.0.0:8000    
+ # gunicorn blog.wsgi:application # run wsgi via gunicorn
   web:
     build: ./blog
     restart: always
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn blog.wsgi:application --bind 0.0.0.0:8000"
     environment:
       - DB_NAME=blog
       - DB_USER=postgres
